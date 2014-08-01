@@ -7069,7 +7069,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				rows: 				[1, 1, 1],
 				width: 				960,
-				height: 			3700,
+				height: 			370,
 				content_height: 300,
 				marker: {
 					width: 			150,
