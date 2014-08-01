@@ -7069,7 +7069,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				rows: 				[1, 1, 1],
 				width: 				960,
-				height: 			200,
+				height: 			3700,
+				content_height: 300,
 				marker: {
 					width: 			150,
 					height: 		50
@@ -7090,7 +7091,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				nav: {
 					width: 			100,
-					height: 		200
+					height: 		370
 				}
 			},
 			ease: 					"easeInOutExpo",
@@ -7779,12 +7780,17 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		/* ADD to Config
 		================================================== */
 		row_height			=	config.nav.marker.height/2;
+		row_count = config.nav.content_height / row_height;
 		config.nav.rows = {
-			full:				[1, row_height*2, row_height*4],
-			half:				[1, row_height, row_height*2, row_height*3, row_height*4, row_height*5],
+			full:				[1, row_height*2],
+			half:				[1, row_height, row_height*2, row_height*3],
 			current:			[]
 		}
-		
+		for(var i=4; i<row_count; i+=2) {
+      config.nav.rows.full.push(row_height*i);
+      config.nav.rows.half.push(row_height*i);
+      config.nav.rows.half.push(row_height*(i+1));
+    }
 		if (content_width != null && content_width != "") {
 			config.nav.width	= 	content_width;
 		} 
@@ -9202,7 +9208,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// CREATE TAGS
 			tags = VMM.Util.deDupeArray(tags);
-			if (tags.length > 3) {
+			var threshold = config.nav.content_height / config.nav.marker.height;
+      if(isNaN(threshold)) threshold = 3;
+      if (tags.length > threshold) {
 				config.nav.rows.current = config.nav.rows.half;
 			} else {
 				config.nav.rows.current = config.nav.rows.full;
@@ -9211,7 +9219,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				if (k < config.nav.rows.current.length) {
 					var tag_element = VMM.appendAndGetElement($timebackground, "<div>", "timenav-tag");
 					VMM.Lib.addClass(tag_element, "timenav-tag-row-" + (k+1));
-					if (tags.length > 3) {
+					if (tags.length > threshold) {
 						VMM.Lib.addClass(tag_element, "timenav-tag-size-half");
 					} else {
 						VMM.Lib.addClass(tag_element, "timenav-tag-size-full");
@@ -9222,7 +9230,7 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			}
 			
 			// RESIZE FLAGS IF NEEDED
-			if (tags.length > 3) {
+			if (tags.length > threshold) {
 				for(l = 0; l < markers.length; l++) {
 					VMM.Lib.addClass(markers[l].flag, "flag-small");
 					markers[l].full = false;
