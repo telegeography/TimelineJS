@@ -7477,7 +7477,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		function updateSize() {
 			trace("UPDATE SIZE");
 			config.width = VMM.Lib.width($timeline);
-			config.height = VMM.Lib.height($timeline);
+			//config.height = VMM.Lib.height($timeline);
+			config.height = VMM.Lib.height($timeline) - 50;
 			
 			config.nav.width = config.width;
 			config.feature.width = config.width;

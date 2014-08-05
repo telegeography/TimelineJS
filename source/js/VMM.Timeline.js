@@ -108,7 +108,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				rows: 				[1, 1, 1],
 				width: 				960,
-				height: 			200,
+				height: 			300,
+				content_height: 300,
 				marker: {
 					width: 			150,
 					height: 		50
@@ -129,7 +130,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				nav: {
 					width: 			100,
-					height: 		200
+					height: 		300
 				}
 			},
 			ease: 					"easeInOutExpo",
@@ -188,7 +189,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			}
 			
 			config.nav.width			= config.width;
-			config.nav.height			= 200;
+			//config.nav.height			= 200;
 			config.feature.width		= config.width;
 			config.feature.height		= config.height - config.nav.height;
 			config.nav.zoom.adjust		= parseInt(config.start_zoom_adjust, 10);
