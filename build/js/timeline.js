@@ -7069,8 +7069,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				rows: 				[1, 1, 1],
 				width: 				960,
-				height: 			370,
-				content_height: 300,
+				height: 			150,
+				content_height: 150,
 				marker: {
 					width: 			150,
 					height: 		50
@@ -7091,7 +7091,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				},
 				nav: {
 					width: 			100,
-					height: 		370
+					height: 		150
 				}
 			},
 			ease: 					"easeInOutExpo",
