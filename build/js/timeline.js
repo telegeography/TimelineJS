@@ -8474,6 +8474,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 					
 				}
 				
+				// ADJUSTING FOR TOP PIXEL OF FIRST ROW
+				var adjusted_row_pos = row_pos;
+				if (adjusted_row_pos != 1) { adjusted_row_pos = row_pos+1; }
+				
 				// SET LAST MARKER POSITION
 				previous_pos = pos;
 				
@@ -8488,10 +8492,10 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				//if (is_animated && is_in_view) {
 				if (is_animated) {
 					VMM.Lib.stop(marker.flag);
-					VMM.Lib.animate(marker.flag, config.duration, config.ease, {"top": row_pos});
+					VMM.Lib.animate(marker.flag, config.duration, config.ease, {"top": adjusted_row_pos});
 				} else {
 					VMM.Lib.stop(marker.flag);
-					VMM.Lib.css(marker.flag, "top", row_pos);
+					VMM.Lib.css(marker.flag, "top", adjusted_row_pos);
 				}
 				
 				// IS THE MARKER A REPRESENTATION OF A START SCREEN?
