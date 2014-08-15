@@ -7073,7 +7073,7 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content_height: 150,
 				marker: {
 					width: 			150,
-					height: 		50
+					height: 		25
 				}
 			},
 			feature: {
@@ -7153,6 +7153,9 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			//config.nav.height			= 200;
 			config.nav.height = config.nav_height;
 			config.nav.content_height = config.nav_height;
+			if (config.marker_count) {
+			  config.nav.marker.height = config.nav_height/config.marker_count; 
+			}
 			config.feature.width		= config.width;
 			config.feature.height		= config.height - config.nav.height;
 			config.nav.zoom.adjust		= parseInt(config.start_zoom_adjust, 10);
@@ -7991,12 +7994,24 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		
 		function goToMarker(n, ease, duration, fast, firstrun) {
 			trace("GO TO MARKER");
+			
 			var _ease		= config.ease,
 				_duration	= config.duration,
 				is_last		= false,
 				is_first	= false;
 			
 			current_marker = 	n;
+			
+			// Background Image Update
+			var backgroundStyle = (data[n].asset.background) ? "background-image:url(" + data[n].asset.background + ");" : "background-image:none;";
+		 	var currentBackground = jQuery("#storyjs-timeline").attr("style");
+			if (!jQuery("#fade-div").length) {
+		    jQuery("<div />").attr("id", "fade-div").prependTo("#storyjs-timeline");
+		  }
+		  jQuery("#fade-div").attr("style", currentBackground).show();
+			jQuery("#storyjs-timeline").attr("style", backgroundStyle);
+			jQuery("#fade-div").fadeOut(800);
+			// End Background Image Update
 			
 			timenav_pos.left			= (config.width/2) - markers[current_marker].pos_left
 			timenav_pos.visible.left	= Math.abs(timenav_pos.left) - 100;
@@ -9496,6 +9511,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 					// that format doesn't seem to have a way to specify a worksheet.
 					key	= VMM.Timeline.DataObj.model.googlespreadsheet.extractSpreadsheetKey(raw);
 					worksheet = VMM.Util.getUrlVars(raw)["worksheet"];
+					
 					if (typeof worksheet == "undefined") worksheet = "od6";
 					
 					url	= "https://spreadsheets.google.com/feeds/list/" + key + "/" + worksheet + "/public/values?alt=json";
@@ -9569,6 +9585,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 								data_obj.timeline.asset.media	= getGVar(dd.gsx$media);
 								data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
 								data_obj.timeline.asset.credit	= getGVar(dd.gsx$mediacredit);
+								data_obj.timeline.asset.background	= getGVar(dd.gsx$background);
 								data_obj.timeline.text			= getGVar(dd.gsx$text);
 								data_obj.timeline.type			= "google spreadsheet";
 							} else if (dd_type.match("era")) {
@@ -9592,7 +9609,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 											media:		getGVar(dd.gsx$media),
 											credit:		getGVar(dd.gsx$mediacredit),
 											caption:	getGVar(dd.gsx$mediacaption),
-											thumbnail:	getGVar(dd.gsx$mediathumbnail)
+											thumbnail:	getGVar(dd.gsx$mediathumbnail),
+											background:	getGVar(dd.gsx$background)
 										}
 								};
 							
@@ -9693,7 +9711,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 									media:		"",
 									credit:		"",
 									caption:	"",
-									thumbnail:	""
+									thumbnail:	"",
+									background: ""
 								}
 							};
 							list.push(date);
@@ -9734,6 +9753,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 									column_name = "type";
 								} else if (cell.content == "Tag") {
 									column_name = "tag";
+								} else if (cell.content == "Background") {
+									column_name = "background";
 								}
 								
 								cellnames.push(column_name);
@@ -9754,6 +9775,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 								data_obj.timeline.asset.media	= date.media;
 								data_obj.timeline.asset.caption	= date.caption;
 								data_obj.timeline.asset.credit	= date.credit;
+								data_obj.timeline.asset.background = date.background;
 								data_obj.timeline.text			= date.text;
 								data_obj.timeline.type			= "google spreadsheet";
 							} else if (date.type.match("era")) {
@@ -9779,7 +9801,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 												media:		date.media,
 												credit:		date.credit,
 												caption:	date.caption,
-												thumbnail:	date.thumbnail
+												thumbnail:	date.thumbnail,
+												background:	date.background
 											}
 									};
 								
