@@ -7086,8 +7086,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content: {
 					width: 			720,
 					height: 		400,
-					padding: 		130,
-					padding_default:130
+					padding: 		100,
+					padding_default:100
 				},
 				nav: {
 					width: 			100,
@@ -7481,7 +7481,12 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 		
 		function updateSize() {
 			trace("UPDATE SIZE");
-			config.width = VMM.Lib.width($timeline);
+			//config.width = VMM.Lib.width($timeline);
+			if (config.min_width) {
+			  config.width = (VMM.Lib.width($timeline) > config.min_width) ? VMM.Lib.width($timeline) : config.min_width;
+			} else {
+			  config.width = VMM.Lib.width($timeline);
+			}
 			//config.height = VMM.Lib.height($timeline);
 			config.height = VMM.Lib.height($timeline) - 111;
 			
