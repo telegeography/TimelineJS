@@ -6168,6 +6168,9 @@ if (typeof VMM.Slider != 'undefined') {
 				VMM.Lib.addClass($slide, c.layout);
 			}
 			
+			/* ADD TAGS CLASS
+			================================================== */
+			VMM.Lib.addClass($slide, data.asset.tags);
 			
 		};
 		
@@ -8009,12 +8012,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// Background Image Update
 			var backgroundStyle = (data[n].asset.background) ? "background-image:url(" + data[n].asset.background + ");" : "background-image:none;";
-		 	var currentBackground = jQuery("#storyjs-timeline").attr("style");
+		 	var currentBackground = (jQuery("#storyjs-timeline").attr("style") == "background-image:none;") ? "background-color:" + jQuery("#storyjs-timeline").css("background-color") + ";" : jQuery("#storyjs-timeline").attr("style");
 			if (!jQuery("#fade-div").length) {
+			  jQuery("<div />").attr("id", "overlay").prependTo("#storyjs-timeline");
 		    jQuery("<div />").attr("id", "fade-div").prependTo("#storyjs-timeline");
 		  }
 		  jQuery("#fade-div").attr("style", currentBackground).show();
-			jQuery("#storyjs-timeline").attr("style", backgroundStyle);
+		  jQuery("#storyjs-timeline").attr("style", backgroundStyle);
 			jQuery("#fade-div").fadeOut(800);
 			// End Background Image Update
 			
@@ -9196,6 +9200,9 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 				// ADD ID
 				VMM.Lib.attr(_marker, "id", ( "marker_" + data[i].uniqueid).toString() );
 				
+				// ADD TAGS CLASS
+				jQuery(_marker).addClass(data[i].asset.tags);
+				
 				// MARKER CLICK
 				VMM.bindEvent(_marker_flag, onMarkerClick, "", {number: i});
 				VMM.bindEvent(_marker_flag, onMarkerHover, "mouseenter mouseleave", {number: i, elem:_marker_flag});
@@ -9591,6 +9598,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 								data_obj.timeline.asset.caption	= getGVar(dd.gsx$mediacaption);
 								data_obj.timeline.asset.credit	= getGVar(dd.gsx$mediacredit);
 								data_obj.timeline.asset.background	= getGVar(dd.gsx$background);
+								data_obj.timeline.asset.tags	= getGVar(dd.gsx$tags);
 								data_obj.timeline.text			= getGVar(dd.gsx$text);
 								data_obj.timeline.type			= "google spreadsheet";
 							} else if (dd_type.match("era")) {
@@ -9615,7 +9623,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 											credit:		getGVar(dd.gsx$mediacredit),
 											caption:	getGVar(dd.gsx$mediacaption),
 											thumbnail:	getGVar(dd.gsx$mediathumbnail),
-											background:	getGVar(dd.gsx$background)
+											background:	getGVar(dd.gsx$background),
+											tags:			getGVar(dd.gsx$tags)
 										}
 								};
 							
@@ -9717,7 +9726,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 									credit:		"",
 									caption:	"",
 									thumbnail:	"",
-									background: ""
+									background: "",
+									tags: ""
 								}
 							};
 							list.push(date);
@@ -9760,7 +9770,10 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 									column_name = "tag";
 								} else if (cell.content == "Background") {
 									column_name = "background";
+								} else if (cell.content == "Tags") {
+									column_name = "tags";
 								}
+								
 								
 								cellnames.push(column_name);
 								
@@ -9781,6 +9794,7 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 								data_obj.timeline.asset.caption	= date.caption;
 								data_obj.timeline.asset.credit	= date.credit;
 								data_obj.timeline.asset.background = date.background;
+								data_obj.timeline.asset.tags = date.tags;
 								data_obj.timeline.text			= date.text;
 								data_obj.timeline.type			= "google spreadsheet";
 							} else if (date.type.match("era")) {
@@ -9807,7 +9821,8 @@ if (typeof VMM.Timeline !== 'undefined' && typeof VMM.Timeline.DataObj == 'undef
 												credit:		date.credit,
 												caption:	date.caption,
 												thumbnail:	date.thumbnail,
-												background:	date.background
+												background:	date.background,
+												tags:			date.tags
 											}
 									};
 								
