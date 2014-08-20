@@ -6160,7 +6160,7 @@ if (typeof VMM.Slider != 'undefined') {
 					VMM.Lib.addClass($slide, c.layout);
 					VMM.Lib.addClass($slide, "pad-left");
 					var slideIndex = jQuery(".slider-item").index($slide.parents(".slider-item"));
-					if (slideIndex % 2 == 0) {
+					if (slideIndex % 2 != 0) {
 					  VMM.Lib.detach($text);
   					VMM.Lib.append($slide, $text);
 					}
