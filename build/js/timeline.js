@@ -5641,7 +5641,6 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 			for(i = 0; i < slides.length; i++) {
 				
 				slides[i].layout(is_skinny);
-				
 				if (slides[i].content_height() > config.slider.height + 20) {
 					slides[i].css("display", "block");
 				} else {
@@ -6160,8 +6159,13 @@ if (typeof VMM.Slider != 'undefined') {
 				} else {
 					VMM.Lib.addClass($slide, c.layout);
 					VMM.Lib.addClass($slide, "pad-left");
-					VMM.Lib.detach($text);
-					VMM.Lib.append($slide, $text);
+					var slideIndex = jQuery(".slider-item").index($slide.parents(".slider-item"));
+					if (slideIndex % 2 == 0) {
+					  VMM.Lib.detach($text);
+  					VMM.Lib.append($slide, $text);
+					}
+					//VMM.Lib.detach($text);
+					//VMM.Lib.append($slide, $text);
 				}
 				
 			} else {
@@ -7089,8 +7093,8 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 				content: {
 					width: 			720,
 					height: 		400,
-					padding: 		100,
-					padding_default:100
+					padding: 		130,
+					padding_default:130
 				},
 				nav: {
 					width: 			100,
