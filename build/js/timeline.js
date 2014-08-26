@@ -8030,13 +8030,13 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 			
 			// Background Image Update
 			var backgroundStyle = (data[n].asset.background) ? "background-image:url(" + data[n].asset.background + ");" : "background-image:none;";
-		 	var currentBackground = (jQuery("#storyjs-timeline").attr("style") == "background-image:none;") ? "background-color:" + jQuery("#storyjs-timeline").css("background-color") + ";" : jQuery("#storyjs-timeline").attr("style");
+		 	var currentBackground = (jQuery("#timeline").attr("style") == "background-image:none;") ? "background-color:" + jQuery("#timeline").css("background-color") + ";" : jQuery("#timeline").attr("style");
 			if (!jQuery("#fade-div").length) {
-			  jQuery("<div />").attr("id", "overlay").prependTo("#storyjs-timeline");
-		    jQuery("<div />").attr("id", "fade-div").prependTo("#storyjs-timeline");
+			  jQuery("<div />").attr("id", "overlay").prependTo("#timeline");
+		    jQuery("<div />").attr("id", "fade-div").prependTo("#timeline");
 		  }
 		  jQuery("#fade-div").attr("style", currentBackground).show();
-		  jQuery("#storyjs-timeline").attr("style", backgroundStyle);
+		  jQuery("#timeline").attr("style", backgroundStyle);
 			jQuery("#fade-div").fadeOut(800);
 			// End Background Image Update
 			
