@@ -5733,8 +5733,14 @@ if(typeof VMM != 'undefined' && typeof VMM.Slider == 'undefined') {
 				}
 				if (is_last) {
 					VMM.Lib.visible(navigation.nextBtn, false);
+					if (jQuery("#" + config.nav_next_timeline).length) {
+            jQuery("#" + config.nav_next_timeline).show();
+					}
 				} else {
 					VMM.Lib.visible(navigation.nextBtn, true);
+					if (jQuery("#" + config.nav_next_timeline).length) {
+            jQuery("#" + config.nav_next_timeline).hide();
+					}
 					_title = VMM.Util.unlinkify(data[current_slide + 1].title);
 					if (config.type == "timeline") {
 						if(typeof data[current_slide + 1].date === "undefined") {
@@ -7404,10 +7410,18 @@ if(typeof VMM != 'undefined' && typeof VMM.Timeline == 'undefined') {
 			trace("iframeLoaded");
 		};
 		
+		this.resetTimeline = function() {
+		  VMM.Timeline.DataObj.data_template_obj.timeline.date = []
+		  config.current_slide = 0;
+		  slider.setSlide(0);
+		  timenav.setMarker(0, config.ease,config.duration);
+		}
+		
 		this.reload = function(_d) {
 			trace("Load new timeline data" + _d);
 			VMM.fireEvent(global, config.events.messege, config.language.messages.loading_timeline);
 			data = {};
+			VMM.Timeline.DataObj.data_template_obj.timeline.date = []
 			VMM.Timeline.DataObj.getData(_d);
 			config.current_slide = 0;
 			slider.setSlide(0);
