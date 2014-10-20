@@ -8033,8 +8033,21 @@ if(typeof VMM.Timeline != 'undefined' && typeof VMM.Timeline.TimeNav == 'undefin
 		 	var currentBackground = (jQuery("#timeline").attr("style") == "background-image:none;") ? "background-color:" + jQuery("#timeline").css("background-color") + ";" : jQuery("#timeline").attr("style");
 			if (!jQuery("#fade-div").length) {
 			  jQuery("<div />").attr("id", "overlay").prependTo("#timeline");
+			  jQuery("<div />").attr("id", "overlay-half").prependTo("#timeline");
 		    jQuery("<div />").attr("id", "fade-div").prependTo("#timeline");
+		    // Should embed overlay in background image rather than this
+		    if (!data[n].asset.media) {
+		      jQuery("#overlay").hide();
+  	      jQuery("#overlay-half").show();
+	      }
 		  }
+		  if (data[n].asset.media) {
+	        jQuery("#overlay:hidden").fadeIn(1000);
+  	      jQuery("#overlay-half:visible").fadeOut(1000); 
+	    } else {
+	      jQuery("#overlay:visible").fadeOut(1000);
+	      jQuery("#overlay-half:hidden").fadeIn(1000);
+	    }
 		  jQuery("#fade-div").attr("style", currentBackground).show();
 		  jQuery("#timeline").attr("style", backgroundStyle);
 			jQuery("#fade-div").fadeOut(800);
